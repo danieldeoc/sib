@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  
+
+  background: url(images/bg.png) #fff;
+  
+}
+
+* { font-family: 'Sofia Sans Semi Condensed', sans-serif; }
+
+
+/* //////////////////// */
+/* SPACING */
+$xs: 4px;
+$sm: 8px;
+$md: 16px;
+$lg: 24px;
+$xl: 32px;
+$xxl: 40px;
+
+
+/* //////////////////// */
+/* STRUCTURE */
+
+.questionBody{
+  max-width: 600px;
+  margin: 0 auto;
+
+}
+.questionBody h1{
+  text-align: center;
+  font-size: 2rem;
+  padding: $sm 0 $md;
+  color: #0a61ab;
+}
+
+.button{ display: block;
+  padding: $md $lg;
+  margin-bottom: $md;
+  text-align: center;
+  cursor: pointer;
+  border-radius: $sm;
+  background-color: #0a61ab;
+  color: #fff;
+  font-weight: bold;
+}
+
+
+.progressContainer{
+  background-color: #ccc;
+  height: $sm;
+  border-radius: $sm;
+}
+
+.progressContainer .progressBar{
+  width: 10px;
+  height: 100%;
+  border-radius: $sm;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#87e0fd+0,53cbf1+40,05abe0+100;Blue+3D+%23+16 */
+background: #87e0fd; /* Old browsers */
+background: -moz-linear-gradient(left,  #87e0fd 0%, #53cbf1 40%, #05abe0 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=1 ); /* IE6-9 */
+
+
+}
