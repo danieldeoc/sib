@@ -32,6 +32,7 @@ $xxl: 40px;
   font-size: 2rem;
   padding: $sm 0 $md;
   color: #0a61ab;
+  height: 6rem;
 }
 
 .button{ display: block;
@@ -53,7 +54,7 @@ $xxl: 40px;
 }
 
 .progressContainer .progressBar{
-  width: 10px;
+  width: 0px;
   height: 100%;
   border-radius: $sm;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#87e0fd+0,53cbf1+40,05abe0+100;Blue+3D+%23+16 */
@@ -64,4 +65,31 @@ background: linear-gradient(to right,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* 
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=1 ); /* IE6-9 */
 
 
+}
+
+
+/* //////////////////////////// */
+.resultQuestion{
+  //display: none;
+}
+
+.scale{
+  width: 100%;
+  height: $sm;
+  border-radius: $md;
+  margin: $sm auto;
+  background: rgb(202,3,3);
+  position: relative;
+  background: linear-gradient(90deg, rgba(202,3,3,1) 0%, rgba(255,228,0,1) 50%, rgba(48,220,0,1) 100%); }
+
+.scale .scaleIndicator{
+  width: $xl;
+  height: $xl;
+  border-radius: 100%;
+  position: absolute;
+  left: 0;
+  top: -12px;
+
+  background: rgb(255,255,255);
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(220,220,220,1) 100%); 
 }

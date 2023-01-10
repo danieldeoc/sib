@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import QuestionMarkup from "./question";
 import ProgressBar from "./progressbar";
 import Button from "./button";
+import Result from "./result";
 
 function AppHome(){
     const questions = [
@@ -28,9 +29,14 @@ function AppHome(){
     ];
     const [questionNumber, setQuestionNumber] = useState(0);
     const [question, setQuestion] = useState(questions[questionNumber]);
+    const [result, setResult] = useState(0)
+    var [points,setPoints] = useState(0);
 
     const positiveAnswers = [0,1,1,1,0,3,0,2,1,2,2,2,-1,1,1,-1,-1,-1,1,3];
     const negativeAnswers = [-1,-1,-1,-2,-3,0,-2,0,-1,0,0,0,0,-1,-1,0,0,1,-1,0];
+    // max positive 22
+    // max negative -18
+
 
     // avança nas perguntas
     function AdvanceQuestion(){
@@ -38,19 +44,47 @@ function AppHome(){
             let number = questionNumber + 1;
             setQuestionNumber( number );
             setQuestion(questions[number]);
+
+            let progressBarWidth = (questionNumber + 2) * 5;
+            document.getElementById("progressBar").style.width = progressBarWidth+"%";
+
             // document.getElementById("yes").style.display = "block";
         } else {
-            // document.getElementById("yes").style.display = "none";
+            setResult(points)
+            document.getElementById("yes").style.display = "none";
+            document.getElementById("no").style.display = "none";
+            document.getElementById("question").style.display = "none";
+            document.getElementById("progressContainer").style.display = "none";
+            document.getElementById("resultBox").style.display = "block";
+
+            let width = document.getElementById("scale").offsetWidth; // width of the scale
+            let midPoint = width/2; // midpoint
+            
+            if(points > 0){   
+                let sideProportion = (points / 22);
+                var indicatorPosition = (sideProportion * midPoint) + midPoint;
+            } else {
+                let sideProportion = (points / 18);
+                var indicatorPosition = midPoint - (sideProportion * midPoint);
+            }
+            console.log(indicatorPosition)
+            document.getElementById("scaleIndicator").style.marginLeft = indicatorPosition+"px";
+
+
         }
     }
 
     function answersYes(){
         AdvanceQuestion();
+        var newPoints = points + positiveAnswers[questionNumber];
+        setPoints(newPoints)
     }
         
     // resposta negativa
     function answersNo(){
         AdvanceQuestion();
+        var newPoints = points + negativeAnswers[questionNumber];
+        setPoints(newPoints)
     }
     
     return(
@@ -59,6 +93,7 @@ function AppHome(){
             <Button id="yes" label="Sim" action={answersYes} />
             <Button id="no" label="Não" action={answersNo} />
             <ProgressBar />
+            <Result resultText={result} />
         </div>
     )
 }

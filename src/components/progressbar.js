@@ -2,8 +2,8 @@ import React from "react";
 
 function ProgressBar(){
     return(
-        <div className="progressContainer">
-            <div className="progressBar"></div>
+        <div id="progressContainer" className="progressContainer">
+            <div id="progressBar" className="progressBar"></div>
         </div>
     )
 }
