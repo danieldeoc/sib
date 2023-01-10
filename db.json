@@ -1,0 +1,24 @@
+{
+  "ListaDeCompras": [
+    {
+      "PurchaseName": "Default",
+      "Score": 1,
+      "id": 1
+    },
+    {
+      "PurchaseName": "Chaleira Elétrica",
+      "Score": -2,
+      "id": 2
+    },
+    {
+      "PurchaseName": "Garrafa Térmica",
+      "Score": -2,
+      "id": 3
+    },
+    {
+      "PurchaseName": "",
+      "Score": -8,
+      "id": 4
+    }
+  ]
+}

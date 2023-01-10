@@ -70,7 +70,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', end
 
 /* //////////////////////////// */
 .resultQuestion{
-  //display: none;
+  display: none;
 }
 
 .scale{
@@ -93,3 +93,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', end
   background: rgb(255,255,255);
   background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(220,220,220,1) 100%); 
 }
+
+
+.resultBox{}
