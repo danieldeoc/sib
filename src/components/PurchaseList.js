@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Menu from "./menu";
 
 
 function PurchaseList(){
@@ -22,6 +23,7 @@ function PurchaseList(){
     
     return(
         <>
+            <Menu />
           {
             purchaseItens.map( (data) => (
                 <li key={data.id}>{data.PurchaseName} {data.Score}</li>

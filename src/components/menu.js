@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 function Menu(){
     return(
         <>
-            Decision
-            Products
+            <Link to="/">Decision</Link>
+            <Link to="/purchaseList">Products</Link>
         </>
     )
 }
