@@ -4,6 +4,7 @@ import ProgressBar from "./progressbar";
 import Button from "./button";
 import Result from "./result";
 import InputText from "./input";
+import Menu from "./menu";
 
 function AppHome(){
     const purchase = {
@@ -141,8 +142,10 @@ function AppHome(){
         document.getElementById("resultBox").style.display = "none";
         document.getElementById("progressBar").style.width = "0%";
 
+        document.getElementById("productName").value = "";
+
         setQuestionNumber(0);
-        setQuestion(questions[questionNumber]);
+        setQuestion(questions[0]);
         setResult(0);
         setScale(0);
         setPoints(0);
@@ -151,7 +154,8 @@ function AppHome(){
     
     return(
         <div className="questionBody">
-            <InputText placeholder={product} change={e => setProduct(e.target.value)} />
+            <Menu />
+            <InputText id="productName" placeholder={product} change={e => setProduct(e.target.value)} />
             <QuestionMarkup question={question} />
             <Button id="yes" label="Sim" action={answersYes} />
             <Button id="no" label="Não" action={answersNo} />

@@ -19,6 +19,26 @@
       "PurchaseName": "",
       "Score": -8,
       "id": 4
+    },
+    {
+      "PurchaseName": "Café Árabe",
+      "Score": -10,
+      "id": 5
+    },
+    {
+      "PurchaseName": "Product name",
+      "Score": 12,
+      "id": 6
+    },
+    {
+      "PurchaseName": " ",
+      "Score": -13,
+      "id": 7
+    },
+    {
+      "PurchaseName": "fone de ouvido",
+      "Score": -6,
+      "id": 8
     }
   ]
 }
