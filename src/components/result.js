@@ -1,10 +1,19 @@
 import React from "react";
 import Button from "./button";
+import InputText from "./input";
+
 
 function Result(props){
     return(
-        <>
+        <div id="resultBox">
             <div id="resultBox" className="resultQuestion">
+                
+                <InputText 
+                    label="Product name"
+                    inputClass="productName" 
+                    id="productName" 
+                    placeholder={props.product} 
+                    change={e => props.setProduct(e.target.value)} />
                 
                 <div className="resultBox">
                     <h1 id="purchaseScale">{props.scale}</h1>
@@ -17,7 +26,7 @@ function Result(props){
                     <Button label="Nova decisão" action={props.action} />
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

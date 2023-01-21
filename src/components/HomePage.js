@@ -3,8 +3,10 @@ import QuestionMarkup from "./question";
 import ProgressBar from "./progressbar";
 import Button from "./button";
 import Result from "./result";
-import InputText from "./input";
+
 import Menu from "./menu";
+
+
 
 function AppHome(){
     const purchase = {
@@ -34,6 +36,9 @@ function AppHome(){
         "Tenho certeza de que esse produto vai me dar o que espero ou funciona da maneira esperada?",
         "É para algum motivo especial, excecional? (presentes, motivos afetivos)"
     ];
+
+    
+
     const [questionNumber, setQuestionNumber] = useState(0);
     const [question, setQuestion] = useState(questions[questionNumber]);
     const [result, setResult] = useState(0)
@@ -49,12 +54,22 @@ function AppHome(){
         "Essa compra parece ser neutra, pense um pouco mais ou procure melhores opções.",
         "Esta compra parece ser boa para você."
     ]
-    // max positive 22
-    // max negative -18
-
     
 
+    // hides splash screen
+    function splashScreenHideOut(){
+        setTimeout(() => {
+            document.getElementById("splashScreen").style.display = "none";
+            document.getElementById("homebody").style.display = "block";
+            
 
+            document.getElementById("totalQuestions").innerHTML = questions.length;
+
+        }, 3000)
+    }
+    splashScreenHideOut();
+
+    
     // avança nas perguntas
     function AdvanceQuestion(){
         if(questionNumber < 19){
@@ -64,6 +79,7 @@ function AppHome(){
 
             let progressBarWidth = (questionNumber + 2) * 5;
             document.getElementById("progressBar").style.width = progressBarWidth+"%";
+            document.getElementById("currentQuestion").innerHTML = number+1;
 
             // document.getElementById("yes").style.display = "block";
         } else {
@@ -151,18 +167,28 @@ function AppHome(){
         setPoints(0);
         setProduct(" ");
     }
+
     
     return(
-        <div className="questionBody">
-            <Menu />
-            <InputText id="productName" placeholder={product} change={e => setProduct(e.target.value)} />
-            <QuestionMarkup question={question} />
-            <Button id="yes" label="Sim" action={answersYes} />
-            <Button id="no" label="Não" action={answersNo} />
-            <ProgressBar />
-            <Result scale={scale} resultText={result} action={novaDecisao} />
-        </div>
+        <>
+            <div id="splashScreen" className="splashScreen"></div>
+        
+            <div id="homebody" className="questionBody">
+                <Menu />
+                <div id="questionContentBox">
+                    <QuestionMarkup question={question} />
+                    <ProgressBar />
+                    <div id="buttonsBox">
+                        <Button id="yes" label="Sim" action={answersYes} />
+                        <Button id="no" label="Não" action={answersNo} />
+                    </div>
+                    
+                </div>
+                <Result placeholder={product} scale={scale} resultText={result} action={novaDecisao} />
+            </div>
+        </>
     )
 }
+
 
 export default AppHome;

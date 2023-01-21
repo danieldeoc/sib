@@ -2,7 +2,10 @@ import React from "react";
 
 function QuestionMarkup(props){
     return(
-        <h1 id="question" >{props.question}</h1>
+        <div id="questionBox">
+            <div id="questionIndexer"> <span id="currentQuestion">1</span> / <span id="totalQuestions">1</span> </div>
+            <h1 id="question" >{props.question}</h1>
+        </div>
     )
 }
 
