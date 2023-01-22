@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QuestionMarkup from "./question";
 import ProgressBar from "./progressbar";
 import Button from "./button";
@@ -9,11 +9,7 @@ import Menu from "./menu";
 
 
 function AppHome(){
-    const purchase = {
-        PurchaseName: "Default",
-        Score:  0
-    }
-
+    
     const questions = [
         "Pesquisei o preço e informações sobre o produto antes de comprar?",
         "Tenho todo o dinheiro necessário para comprar?",
@@ -43,33 +39,27 @@ function AppHome(){
     const [question, setQuestion] = useState(questions[questionNumber]);
     const [result, setResult] = useState(0)
     const [scale, setScale] = useState(0)
-    var [points,setPoints] = useState(0);
+    const [points,setPoints] = useState(0);
     const [product, setProduct] = useState("Product name")
-
+    const [saved, setSaved] = useState(false);
     const positiveAnswers = [0,1,1,1,0,3,0,2,1,2,2,2,-1,1,1,-1,-1,-1,1,3];
     const negativeAnswers = [-1,-1,-1,-2,-3,0,-2,0,-1,0,0,0,0,-1,-1,0,0,1,-1,0];
-
+    
+    const purchase = {
+        PurchaseName: product,
+        Score: scale
+    }
     const results = [
         "Provavelmente você não deve fazer esta compra agora, espere, pense e pesquise mais um pouco.",
         "Essa compra parece ser neutra, pense um pouco mais ou procure melhores opções.",
         "Esta compra parece ser boa para você."
     ]
+
+    useEffect(() => {
+        document.getElementById("totalQuestions").innerHTML = questions.length;
+    }, []);
     
 
-    // hides splash screen
-    function splashScreenHideOut(){
-        setTimeout(() => {
-            document.getElementById("splashScreen").style.display = "none";
-            document.getElementById("homebody").style.display = "block";
-            
-
-            document.getElementById("totalQuestions").innerHTML = questions.length;
-
-        }, 3000)
-    }
-    splashScreenHideOut();
-
-    
     // avança nas perguntas
     function AdvanceQuestion(){
         if(questionNumber < 19){
@@ -81,13 +71,9 @@ function AppHome(){
             document.getElementById("progressBar").style.width = progressBarWidth+"%";
             document.getElementById("currentQuestion").innerHTML = number+1;
 
-            // document.getElementById("yes").style.display = "block";
         } else {
             setResult(points)
-            document.getElementById("yes").style.display = "none";
-            document.getElementById("no").style.display = "none";
-            document.getElementById("question").style.display = "none";
-            document.getElementById("progressContainer").style.display = "none";
+            document.getElementById("questionContentBox").style.display = "none";
             document.getElementById("resultBox").style.display = "block";
 
             ///////////////////////////////////////////
@@ -122,19 +108,9 @@ function AppHome(){
 
             purchase.PurchaseName = product;
             purchase.Score = points;
+        }
            
-            fetch("http://localhost:5000/ListaDeCompras", {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(purchase),
-            }).then( (resp) => resp.json() )
-            .then( function(response) {
-                console.log("Saved on database")
-            }).catch( (err) => console.log(err) )
-
-            }
+            
     }
 
     function answersYes(){
@@ -150,15 +126,17 @@ function AppHome(){
         setPoints(newPoints)
     }
 
-    function novaDecisao(){
-        document.getElementById("yes").style.display = "block";
-        document.getElementById("no").style.display = "block";
-        document.getElementById("question").style.display = "block";
-        document.getElementById("progressContainer").style.display = "block";
+    function novaDecisao(){        
+        document.getElementById("questionContentBox").style.display = "block";
         document.getElementById("resultBox").style.display = "none";
         document.getElementById("progressBar").style.width = "0%";
-
         document.getElementById("productName").value = "";
+        document.getElementById("totalQuestions").innerHTML = questions.length;
+        document.getElementById("currentQuestion").innerHTML = 1;
+
+        const saveBt = document.getElementById("save");
+        saveBt.classList.remove("saved");
+        saveBt.textContent = "Save";
 
         setQuestionNumber(0);
         setQuestion(questions[0]);
@@ -166,26 +144,51 @@ function AppHome(){
         setScale(0);
         setPoints(0);
         setProduct(" ");
+        setSaved(false);
     }
 
+    function saveProductDb(){
+        if(!saved){
+            fetch("http://localhost:5000/ListaDeCompras", {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(purchase),
+            }).then( (resp) => resp.json() )
+            .then( function(response) {
+                const saveBt = document.getElementById("save");
+                saveBt.classList.add("saved");
+                saveBt.textContent = "Saved";
+                setSaved(true);
+    
+            }).catch( (err) => console.log(err) );
+        }
+    }
+
+    function setProductName(){
+        let value = document.getElementById("productName").value;
+        setProduct(value);
+    }
     
     return(
         <>
-            <div id="splashScreen" className="splashScreen"></div>
-        
-            <div id="homebody" className="questionBody">
-                <Menu />
-                <div id="questionContentBox">
-                    <QuestionMarkup question={question} />
-                    <ProgressBar />
-                    <div id="buttonsBox">
-                        <Button id="yes" label="Sim" action={answersYes} />
-                        <Button id="no" label="Não" action={answersNo} />
-                    </div>
-                    
-                </div>
-                <Result placeholder={product} scale={scale} resultText={result} action={novaDecisao} />
-            </div>
+            <Menu />
+            <div id="questionContentBox">
+                <QuestionMarkup question={question} />
+                <ProgressBar />
+                <div id="buttonsBox">
+                    <Button id="yes" label="Sim" action={answersYes} />
+                    <Button id="no" label="Não" action={answersNo} />
+                </div>                
+            </div>        
+            <Result 
+                placeholder={product} 
+                scale={scale} 
+                resultText={result} 
+                newAction={novaDecisao}
+                saveAction={saveProductDb}
+                nameSetter={setProductName} />            
         </>
     )
 }

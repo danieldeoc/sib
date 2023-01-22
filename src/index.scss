@@ -63,19 +63,22 @@ html{
   background: url(images/01_Splash_Screen.png) center top repeat-x;
   background-size: cover;
 }
+/* //////////////////// */
+/* DECISION SCREEN */
 
 #questionContentBox{
   position: absolute;
   height: 385px;
   top: 50%;
   margin-top: -192px; 
+  width: 100%;
+  display: block;
+  max-width: 690px;
 }
-
 #questionBox{
   margin: $xxl 0 0;
   padding: $md;
 }
-
 #questionBox > #questionIndexer{
   color: $gray1;
   font-weight: lighter;
@@ -120,10 +123,13 @@ html{
   background-color: #0a61ab;
   color: #fff;
   font-weight: bold;
+  font-size: 24px;
+  text-transform: uppercase;
+  box-sizing: border-box;
 }
  
 #buttonsBox > .button{
-  width: 35%;
+  width: 48%;
 }
 #buttonsBox > .button:first-child {
   float: left;
@@ -141,8 +147,11 @@ html{
 
 
 /* //////////////////////////// */
+/* //////////////////////////// */
+// RESULT PAGE
 #resultBox{
   padding: $xxl $md 0;
+  display: none;
 }
 
 .inputContainer label{
@@ -166,6 +175,33 @@ html{
 }
 .inputContainer .productName:focus{ outline: none;}
 
+#purchaseScale{
+  font-size: 3rem;
+  margin: $xxl 0;
+  text-align: center;
+  color: $gray3;
+}
+#textResult{
+  color: $gray3;
+  font-size: $lg;
+  text-align: left;
+  margin: $md auto $xl;
+}
+.scaleLegend{
+  position: relative;
+  padding: $xs 0 $md;
+  height: $xxl;
+}
+.scaleLegend span{
+  position: absolute;
+  top: $md;
+  color: $gray3;
+  font-weight: bold;
+}
+
+.scaleLegend span#not{left: 0;}
+.scaleLegend span#maybe{ left: 50%; margin-left: -30px;}
+.scaleLegend span#yes{ right: 0;}
 
 .scale{
   width: 100%;
@@ -177,22 +213,23 @@ html{
   background: linear-gradient(90deg, rgba(202,3,3,1) 0%, rgba(255,228,0,1) 50%, rgba(48,220,0,1) 100%); }
 
 .scale .scaleIndicator{
-  width: $xl;
-  height: $xl;
-  border-radius: 100%;
   position: absolute;
   left: 0;
   top: -12px;
-
-  background: rgb(255,255,255);
-  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(220,220,220,1) 100%); 
+}
+.scale .scaleIndicator img{
+  width: 24px;
 }
 
+#buttonBox{ padding-top: $xl;}
+#buttonBox #save{ background-color: $green;}
+#buttonBox #save.saved{ background-color: $pink;}
 
-.resultBox{}
 
+#buttonBox #newDecision { background-color: $blue;}
 
 /* ######################## */
+/* MENU BAR */
 #menuBar{
   padding-top: $xxl;
   background-color: $white;
@@ -211,3 +248,31 @@ html{
   #menuBar > a.selected{
     color: $purple;
   }
+
+/* ######################## */
+// DECISIONS PAGE
+#decisionBox{ padding: $xxl $md;}
+
+#decisionBox h2{
+  color: $gray3;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 0 $md;
+}
+
+#decisionBox #decisionList{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#decisionBox #decisionList li{
+  color: $gray3;
+  padding: $md 0;
+  border-bottom: 1px solid $gray2;
+  font-weight: bold;
+}
+
+#decisionBox #decisionList li .score{ float: right; color: $gray1;}
+#decisionBox #decisionList li .score.green{ color: $green;}
+#decisionBox #decisionList li .score.pink{ color: $pink;}

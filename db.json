@@ -1,44 +1,34 @@
 {
   "ListaDeCompras": [
     {
-      "PurchaseName": "Default",
-      "Score": 1,
+      "PurchaseName": "rwar",
+      "Score": 2,
       "id": 1
     },
     {
-      "PurchaseName": "Chaleira Elétrica",
-      "Score": -2,
+      "PurchaseName": "1",
+      "Score": 14,
       "id": 2
     },
     {
-      "PurchaseName": "Garrafa Térmica",
-      "Score": -2,
+      "PurchaseName": "2",
+      "Score": -13,
       "id": 3
     },
     {
-      "PurchaseName": "",
-      "Score": -8,
+      "PurchaseName": "3",
+      "Score": 1,
       "id": 4
     },
     {
-      "PurchaseName": "Café Árabe",
-      "Score": -10,
+      "PurchaseName": "Product name",
+      "Score": 6,
       "id": 5
     },
     {
-      "PurchaseName": "Product name",
-      "Score": 12,
+      "PurchaseName": "Meu Produto",
+      "Score": 3,
       "id": 6
-    },
-    {
-      "PurchaseName": " ",
-      "Score": -13,
-      "id": 7
-    },
-    {
-      "PurchaseName": "fone de ouvido",
-      "Score": -6,
-      "id": 8
     }
   ]
 }
