@@ -1,0 +1,8 @@
+{
+  "appId": "io.ionic.shouldibuyit",
+  "appName": "shouldibuyit",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}

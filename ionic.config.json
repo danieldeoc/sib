@@ -1,0 +1,7 @@
+{
+  "name": "Should I Buy It?",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

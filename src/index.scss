@@ -38,7 +38,7 @@ html{
   height: 100%;
   background-size: contain;
   min-height: 490px;
-  min-width: 400px;
+  min-width: 360px;
 }
 
 * { font-family: 'Montserrat', sans-serif; }
@@ -274,5 +274,5 @@ html{
 }
 
 #decisionBox #decisionList li .score{ float: right; color: $gray1;}
-#decisionBox #decisionList li .score.green{ color: $green;}
+#decisionBox #decisionList li .score.green{ color: $blue;}
 #decisionBox #decisionList li .score.pink{ color: $pink;}
