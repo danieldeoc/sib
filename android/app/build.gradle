@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    namespace 'io.ionic.shouldibuyit'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "io.ionic.shouldibuyit"
