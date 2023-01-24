@@ -6,8 +6,6 @@ import AppHome from './components/HomePage.js';
 import DecisionsList from './components/DecisionsList';
 import SplashScreen from './components/splashScreen';
 
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
