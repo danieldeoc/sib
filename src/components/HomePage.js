@@ -13,8 +13,8 @@ import Menu from "./menu";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { doc, setDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc } from "firebase/firestore"; 
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,11 +32,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = app.database;
-
-
-
+const db = getFirestore(app);
 
 
 function AppHome(){
@@ -178,11 +174,25 @@ function AppHome(){
         setSaved(false);
     }
 
-    function saveProductDb(){
-        if(!saved){
-            
-            setDoc(doc(db, "default", "one"), purchase);
+    async function firebaseAdd(purchaseProp){
+        try {
+        const docRef = await addDoc(collection(db, "default"), purchaseProp);
+            console.log("Document written with ID: ", docRef.id);
 
+            const saveBt = document.getElementById("save");
+            saveBt.classList.add("saved");
+            saveBt.textContent = "Saved";
+            setSaved(true);
+
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
+
+    function saveProductDb(){
+        if(!saved){    
+            firebaseAdd(purchase);      
+        /*
             fetch("http://localhost:5000/ListaDeCompras", {
                 method: 'POST',
                 headers: {
@@ -197,6 +207,7 @@ function AppHome(){
                 setSaved(true);
     
             }).catch( (err) => console.log(err) );
+            */
         }
     }
 

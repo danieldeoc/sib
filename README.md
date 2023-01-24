@@ -3,6 +3,7 @@
 Should I Buy It? App is an app design to help people in their purchasing decision moments. Its composed with 20 questions that returns a score about a purchase decision, helping people to decide if they should or not buy a good.
 
 # Versions
+0.0.9 - 24/1/23 - Firebase saving added, bug fixes, firebase get documents added
 0.0.8 - 23/1/23 - First Apk generated, bug fixes, firebase added, 
 0.0.7 - 22/1/23 - splashscreen upgrade, result page layout added, bug fixes, result pages concluded
 0.0.6 - 21/1/23 - Splashscreen added, question and menu layout applyed, result layout started

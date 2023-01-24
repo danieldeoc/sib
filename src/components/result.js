@@ -3,7 +3,6 @@ import Button from "./button";
 import InputText from "./input";
 import Arrow from '../images/arrow.png';
 
-
 function Result(props){
     return(
         <div id="resultBox" className="resultQuestion"> 
