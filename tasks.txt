@@ -1,0 +1,10 @@
+- question height problems
+- saved input what happens?
+- link products sholud be decisions history
+- css space on small phones
+- color on decision list
+- splash screen responsive
+- buttons click effects
+- decisions type: simple, complete
+- font size and link sizes
+- trasnlate all to english
