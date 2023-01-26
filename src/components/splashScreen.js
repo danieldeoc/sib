@@ -1,15 +1,28 @@
 import React from "react";
+import ShoppingCar from "../images/chart.png";
 
 function SplashScreen(){
     function splashScreenHideOut(){
         setTimeout(() => {
             window.location.href = "/decision";           
-           // document.getElementById("totalQuestions").innerHTML = questions.length;
-        }, 3000)
+        }, 4000)
     }
     splashScreenHideOut();
     return(
-        <div id="splashScreen" className="splashScreen"></div>
+        <div className="splashScreenBox">
+
+            <div className="splashContentBox">
+                <h1>
+                    Shoul I<br/>
+                    buy it?
+                </h1>
+                <span>Better decisions in your purchases</span>
+                <img src={ShoppingCar} alt="Should I buy it? Logo" className="imageScreem" />
+            </div>
+
+            <div className="yellowLine"></div>
+            
+        </div>
     )
 }
 export default SplashScreen;

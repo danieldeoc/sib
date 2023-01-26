@@ -63,21 +63,79 @@ html{
   background: url(images/01_Splash_Screen.png) center top repeat-x;
   background-size: cover;
 }
+
+
+.splashScreenBox{
+  position: fixed;
+  left: 0; right: 0;
+  top: 0; bottom: 0;
+  width: 100%; height: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+  background-color: $pink;
+  overflow: hidden;
+}
+
+.splashContentBox{
+  position: absolute;
+  height: 400px;
+  top: 50%;
+  
+  padding: 0 $lg;
+  z-index: 100;
+  left: 50%;
+  margin: -200px 0 0 -195px;
+}
+
+.splashScreenBox h1{
+  font-weight: bolder;
+  color: $white;
+  letter-spacing: -0.05rem;
+  line-height: 3.8rem;
+  font-size: 4rem;
+  margin:0 0 $sm;
+}
+.splashScreenBox span{ color: $white; font-weight: lighter;
+  margin-bottom: $lg;
+  display: block;}
+
+.yellowLine{ position: absolute;
+  left: 0; right: 0; bottom: -10%;
+  width: 120%;
+  height: 40%;
+  margin-left: -10%;
+  background-color: $yellow;
+  transform: rotate(-10deg);}
+
+.imageScreem{
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  animation: fluctuation 2s ease infinite;
+}
+
+@keyframes fluctuation {
+  0% { transform: translateY(0px);}
+  50% {transform: translateY(10px);}
+  100% {transform: translateY(0px);}
+  
+}
+
 /* //////////////////// */
 /* DECISION SCREEN */
 
 #questionContentBox{
   position: absolute;
-  height: 385px;
+  height: 340px;
   top: 50%;
-  margin-top: -192px; 
+  margin-top: -160px; 
   width: 100%;
   display: block;
   max-width: 690px;
 }
 #questionBox{
-  margin: $xxl 0 0;
-  padding: $md;
+  padding: 0 $md;
 }
 #questionBox > #questionIndexer{
   color: $gray1;
@@ -87,24 +145,43 @@ html{
   font-weight: bold;
   color: $gray3;
   margin: 0 0 $md;
-  line-height: 2.4rem;
+  line-height: 2rem;
   height: 13rem;
+  font-size: 1.8rem;
 }
 
 /* //////////////////// */
 /* PROGRESSBAR */
 .progressContainer{
   height: $sm;
-  border-radius: $sm;
-  margin: 0 $md;
   background-color: $gray4;
+
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  width: 100%;
+  
 }
 .progressContainer .progressBar{
   width: 0px;
   height: 100%;
-  border-radius: $sm;
-  background: linear-gradient(90deg, #6A4C93 0%, #FFCA3A 96.45%)
+  background: linear-gradient(90deg, #6A4C93 0%, #FFCA3A 96.45%);
+  animation: bgAnimation 1s ease infinite alternate-reverse;
 }
+
+
+@keyframes bgAnimation {
+  0%   {background: linear-gradient(90deg, #6A4C93 0%, #FFCA3A 100%);}
+  12%  {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 12%, #FFCA3A 100%);}
+  25%  {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 25%, #FFCA3A 100%);}
+  37%  {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 37%, #FFCA3A 100%);}
+  50% {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 50%, #FFCA3A 100%);}
+  62%   {background: linear-gradient(90deg,#FFCA3A 0%,  #6A4C93 62%, #FFCA3A 100%);}
+  75%   {background: linear-gradient(90deg,#FFCA3A 0%,  #6A4C93 75%, #FFCA3A 100%);}
+  87%   {background: linear-gradient(90deg,#FFCA3A 0%,  #6A4C93 87%, #FFCA3A 100%);}
+  100% {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 100%);}
+}
+
 
 /* //////////////////// */
 /* BUTTONS */
@@ -116,7 +193,6 @@ html{
 .button{ 
   display: block;
   padding: $md $lg;
-  margin-bottom: $md;
   text-align: center;
   cursor: pointer;
   border-radius: $sm;
@@ -126,11 +202,20 @@ html{
   font-size: 24px;
   text-transform: uppercase;
   box-sizing: border-box;
+  transition: all 300ms ease-in-out;
+}
+
+.button:hover{
+  background-color: #074173 ;
 }
  
 #buttonsBox > .button{
   width: 48%;
+  transition:all 300ms ease-in-out;
 }
+#buttonsBox > .button:hover,
+#buttonsBox > .button:focus{ transition:all 300ms ease-in-out;}
+
 #buttonsBox > .button:first-child {
   float: left;
 }
@@ -144,14 +229,30 @@ html{
   background-color: $pink;
 }
 
+#buttonsBox > .button#yes:hover,
+#buttonsBox > .button#yes:focus{
+  background-color: #415f12;
+}
+#buttonsBox > .button#no:hover,
+#buttonsBox > .button#no:focus{
+  background-color: #9c373a;
+}
 
 
 /* //////////////////////////// */
 /* //////////////////////////// */
 // RESULT PAGE
 #resultBox{
-  padding: $xxl $md 0;
+  padding: 0 $md 0;
   display: none;
+  position: absolute;
+  top: 50%;
+  height: 375px;
+  margin-top: -188.5px;
+}
+
+.inputContainer {
+  padding-bottom: $md;
 }
 
 .inputContainer label{
@@ -168,7 +269,7 @@ html{
   width: 100%;
   background: none;
   box-sizing: border-box;
-  padding: $sm 0 $md;
+  padding: $sm 0 0;
   font-size: 2rem;
   color: $gray3;
   font-weight: bold;
@@ -177,7 +278,7 @@ html{
 
 #purchaseScale{
   font-size: 3rem;
-  margin: $xxl 0;
+  margin: 0 0 $lg;
   text-align: center;
   color: $gray3;
 }
@@ -189,19 +290,20 @@ html{
 }
 .scaleLegend{
   position: relative;
-  padding: $xs 0 $md;
-  height: $xxl;
+  padding: $xs 0 0;
+  height: $lg;
 }
 .scaleLegend span{
   position: absolute;
-  top: $md;
+  top: $sm;
   color: $gray3;
   font-weight: bold;
+  font-size: 0.7rem;
 }
 
-.scaleLegend span#not{left: 0;}
+.scaleLegend span#not{left: 0; color: rgb(202, 3, 3);}
 .scaleLegend span#maybe{ left: 50%; margin-left: -30px;}
-.scaleLegend span#yes{ right: 0;}
+.scaleLegend span#yes{ right: 0; color: rgb(48, 220, 0);}
 
 .scale{
   width: 100%;
@@ -221,17 +323,63 @@ html{
   width: 24px;
 }
 
-#buttonBox{ padding-top: $xl;}
-#buttonBox #save{ background-color: $green;}
-#buttonBox #save.saved{ background-color: $pink;}
-
+#buttonBox{ padding-top: $md;}
+.overlayBox #save{ background-color: $green;}
+.overlayBox #save.saved{ background-color: $pink;}
 
 #buttonBox #newDecision { background-color: $blue;}
+
+#saveOverlayButton{ background-color: $purple; margin-bottom: $md;}
+
+
+.overlaySave{
+  display: none;
+  opacity: 0;
+}
+
+.overlayBox{
+  position: fixed;
+  top: 50%; left: 5%; right: 5%;
+  width: 90%;
+  margin: -93px auto 0;
+  background: $white;
+  padding: $md;
+  box-sizing: border-box;
+  box-shadow: $shadow;
+  height: 186px;
+  z-index: 1001;
+}
+
+
+.overlaySave.open{
+  display: block;
+  opacity: 1;
+  animation: showBg 600ms ease-in-out;
+}
+@keyframes showBg{
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+.overlaySave.closed{
+  display: none;
+  opacity: 0;
+  animation: hideBg 600ms ease-in-out;
+}
+@keyframes hideBg{
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+.overlayBg{position: fixed;
+  z-index: 1000;
+  left: 0; right: 0;
+  top: 0; bottom: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.8);}
 
 /* ######################## */
 /* MENU BAR */
 #menuBar{
-  padding-top: $xxl;
   background-color: $white;
   box-shadow: $shadow;}
 
@@ -239,15 +387,18 @@ html{
   vertical-align: top;
   width: 50%;
   text-align: center;
-  padding: $md 0;
+  padding: $lg 0;
   text-decoration: none;
   color: $gray1;
-  font-weight: bold;}
+  font-weight: bold;
+  font-size: 1.1rem;}
 
-  #menuBar > a:hover,
-  #menuBar > a.selected{
+#menuBar > a svg{ margin-right: $sm;}
+
+#menuBar > a:hover,
+#menuBar > a.selected{
     color: $purple;
-  }
+}
 
 /* ######################## */
 // DECISIONS PAGE
@@ -276,3 +427,24 @@ html{
 #decisionBox #decisionList li .score{ float: right; color: $gray1;}
 #decisionBox #decisionList li .score.green{ color: $blue;}
 #decisionBox #decisionList li .score.pink{ color: $pink;}
+
+#loadingList{
+  padding: $xxl;
+  text-align: center;
+  border-bottom: none !important;
+}
+.loader{
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  border-radius: 100%;
+  border-right: 2px solid $pink;
+  border-bottom: 2px solid $pink;
+  animation: rotato 300ms ease infinite;
+}
+
+@keyframes rotato {
+  0%{transform: rotate(0deg);}
+  50%{transform: rotate(180deg);}
+  100%{transform: rotate(360deg);}
+}

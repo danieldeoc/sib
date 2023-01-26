@@ -2,7 +2,7 @@ import React, { useEffect} from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
-import { faList } from '@fortawesome/free-solid-svg-icons';
+import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 function Menu(){
@@ -18,8 +18,8 @@ function Menu(){
     return(
         <>
             <div id="menuBar" className="menuBar">
-                <Link id="decisions" to="/decision" className="selected"> <FontAwesomeIcon icon={faCircleQuestion} /> Decision</Link>
-                <Link id="decisionsList" to="/decisionsList"><FontAwesomeIcon icon={faList} /> Products</Link>
+                <Link id="decisions" to="/decision" className="selected"> <FontAwesomeIcon icon={faCircleQuestion} />Decide</Link>
+                <Link id="decisionsList" to="/decisionsList"><FontAwesomeIcon icon={faClockRotateLeft} />Decisions</Link>
             </div>
         </>
     )

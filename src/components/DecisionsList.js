@@ -52,14 +52,14 @@ function DecisionsList(){
 
             var scoreClass = "score";
             var scoreText = results[0];
-            if(scoreResult > 5){
-                scoreClass = "score green";
+            if(scoreResult > 3){
+                scoreClass = "score";
                 scoreText = results[1];
-            } else if(scoreResult < -4) {
-                scoreClass = "score pink"
+            } else if(scoreResult < -3) {
+                scoreClass = "score green"
                 scoreText = results[2];
             } else {
-                scoreClass = "score"
+                scoreClass = "score pink"
             };
 
             const item = `<li><span class='productName'>${productNameResult}</span><span class='${scoreClass}'>${scoreResult} | ${scoreText}</span></li>`;
@@ -67,6 +67,7 @@ function DecisionsList(){
             decisionList.innerHTML += item;
             
         });
+        document.getElementById("loadingList").style.display = "none";
     }
 
     
@@ -89,15 +90,21 @@ function DecisionsList(){
         firebaseData();
     }, []);
 
-
-
+    
     
     return(
         <>
             <Menu />
             <div id="decisionBox">
                 <h2>Decisions</h2>
-                <ul id="decisionList"></ul>        
+                <ul id="decisionList">
+                    <li id="loadingList">
+                        <div className="loader"></div>
+                        
+
+
+                    </li>    
+                </ul>        
             </div>
         </>
     )

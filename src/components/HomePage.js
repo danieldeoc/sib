@@ -160,6 +160,7 @@ function AppHome(){
         document.getElementById("productName").value = "";
         document.getElementById("totalQuestions").innerHTML = questions.length;
         document.getElementById("currentQuestion").innerHTML = 1;
+        document.getElementById("saveOverlayButton").style.display = "block";
 
         const saveBt = document.getElementById("save");
         saveBt.classList.remove("saved");
@@ -174,21 +175,32 @@ function AppHome(){
         setSaved(false);
     }
 
+    function savedDataLayoutInteraction(){
+        const saveOverlay = document.getElementById("saveOverlay");
+        setTimeout(() => {
+            saveOverlay.classList.remove("open");
+            saveOverlay.classList.add("closed");
+        }, 2000)
+
+        document.getElementById("saveOverlayButton").style.display = "none";
+    }
+
     async function firebaseAdd(purchaseProp){
         try {
         const docRef = await addDoc(collection(db, "default"), purchaseProp);
             console.log("Document written with ID: ", docRef.id);
-
             const saveBt = document.getElementById("save");
             saveBt.classList.add("saved");
             saveBt.textContent = "Saved";
             setSaved(true);
-
         } catch (e) {
             console.error("Error adding document: ", e);
             setSaved(false);
         }
+        savedDataLayoutInteraction();
     }
+
+    
 
     function saveProductDb(){
         if(!saved){    
@@ -216,25 +228,29 @@ function AppHome(){
         let value = document.getElementById("productName").value;
         setProduct(value);
     }
+
+    
     
     return(
         <>
             <Menu />
             <div id="questionContentBox">
                 <QuestionMarkup question={question} />
-                <ProgressBar />
+                
                 <div id="buttonsBox">
                     <Button id="yes" label="Sim" action={answersYes} />
                     <Button id="no" label="Não" action={answersNo} />
                 </div>                
-            </div>        
+            </div>
+            <ProgressBar />
             <Result 
                 placeholder={product} 
                 scale={scale} 
                 resultText={result} 
                 newAction={novaDecisao}
                 saveAction={saveProductDb}
-                nameSetter={setProductName} />            
+                nameSetter={setProductName}
+                 />            
         </>
     )
 }
