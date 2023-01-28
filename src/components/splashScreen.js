@@ -13,7 +13,7 @@ function SplashScreen(){
 
             <div className="splashContentBox">
                 <h1>
-                    Shoul I<br/>
+                    Should I<br/>
                     buy it?
                 </h1>
                 <span>Better decisions in your purchases</span>

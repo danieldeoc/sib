@@ -9,6 +9,8 @@ function Result(props){
     function openSaveOverlay(){
         saveOverlay.classList.remove("closed");
         saveOverlay.classList.add("open");
+
+        document.getElementById("productName").focus();
     }   
 
     function hideOverlay(){
@@ -35,7 +37,7 @@ function Result(props){
                 </div>
                 <div id="buttonBox">
                     <Button id="saveOverlayButton" label="Save" action={openSaveOverlay} />
-                    <Button id="newDecision" label="Nova decisão" action={props.newAction} />
+                    <Button id="newDecision" label="New Decision" action={props.newAction} />
                 </div>
             </div>
 

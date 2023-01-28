@@ -38,26 +38,22 @@ const db = getFirestore(app);
 function AppHome(){
     
     const questions = [
-        "Pesquisei o preço e informações sobre o produto antes de comprar?",
-        "Tenho todo o dinheiro necessário para comprar?",
-        "Se gastar esse dinheiro, ele me fará falta?",
-        "Vou usar dinheiro guardado para comprar isso?",
-        "Comprar esse produto vai me fazer gastar mais dinheiro?",
-        "Comprar esse produto vai me fazer ganhar mais dinheiro?",
-        "Esse produto/serviço pode me causar danos? (problemas de saúde, acidentes, etc)",
-        "Esse produto vai me gerar muitos benefícios ou vantagens? (melhorar saude, tempo, etc)",
-        "Esse produto vem em boa quantidade ou tem bom custo benefício?",
-        "Esse produto vai me trazer algum tipo de economia de dinheiro, tempo ou esforço? Ele otimiza a minha vida?",
-        "É essencial para algum projeto ou objetivo da minha vida?",
-        "Esse produto vai me ajudar a resolver algum problema em minha vida?",
-        "É para me fazer sentir melhor ou me dar algum prazer?",
-        "Tenho bons motivos para comprar uma coisa para me fazer sentir melhor ou me dar prazer?",
-        "Eu preciso realmente disso para me sentir melhor?",
-        "Preciso comprar agora, é urgente?",
-        "Existe outra opção semelhante  por melhor preço/qualidade?",
-        "Posso substituir esse produto por outra coisa sem gastar nada?",
-        "Tenho certeza de que esse produto vai me dar o que espero ou funciona da maneira esperada?",
-        "É para algum motivo especial, excecional? (presentes, motivos afetivos)"
+        "Did I researched the price and product informations?",
+    	"Do I have all the money needed to buy it?",
+    	"If I spend this money, will I regret?",
+    	"Will I use saved money to buy this?",
+    	"Buying this product will make me spend more money in the future?",
+    	"Buying this product will make me earn more money in the future?",
+    	"Can this product be harmful to me or others? (health problems, accidents, etc.)",
+    	"Does this product cames in a good amount or is it at a very good price?",
+    	"Will this product save me any money, time or effort?",
+    	"Is it essential for some project or purpose in my life?",
+    	"Am I buying this to make me feel better or to give me some pleasure?",
+    	"Do I need to buy this right now?",
+    	"Are there any other or similar options with better price or quality?",
+    	"Can I replace this product with something else without spending anything?",
+    	"Am I sure that this product will give me what I'm expecting or will it work as expected?",
+    	"Is it for some special reason? (gifts, emotional reasons)"
     ];
 
     
@@ -69,27 +65,34 @@ function AppHome(){
     const [points,setPoints] = useState(0);
     const [product, setProduct] = useState("Product name")
     const [saved, setSaved] = useState(false);
-    const positiveAnswers = [0,1,1,1,0,3,0,2,1,2,2,2,-1,1,1,-1,-1,-1,1,3];
-    const negativeAnswers = [-1,-1,-1,-2,-3,0,-2,0,-1,0,0,0,0,-1,-1,0,0,1,-1,0];
+    const positiveAnswers = [0,1,1,1,0,3,0,1,2,2,-1,-1,-1,-1,1,3];
+    const negativeAnswers = [-1,-1,-1,-2,-3,0,-2,-1,0,0,0,0,0,1,-1,0];
     
     const purchase = {
         PurchaseName: product,
         Score: scale
     }
     const results = [
-        "Provavelmente você não deve fazer esta compra agora, espere, pense e pesquise mais um pouco.",
-        "Essa compra parece ser neutra, pense um pouco mais ou procure melhores opções.",
-        "Esta compra parece ser boa para você."
-    ]
+    	"This purchase is not recommended right now. It's wise to wait and do a better research, looking for better prices or product alternatives.",
+    	"This purchase doesn't seem to be good or bad, so, follow your heart! :D",
+    	"This purchase looks to be fine, you probably should buy it!"
+	]
 
     useEffect(() => {
         document.getElementById("totalQuestions").innerHTML = questions.length;
+
+        const wH = window.innerHeight;
+        const cH = document.getElementById("root").offsetHeight;
+        console.log(wH + " " + cH)
+        
+
     }, []);
     
 
     // avança nas perguntas
     function AdvanceQuestion(){
-        if(questionNumber < 19){
+        console.log(questionNumber +" "+ questions.length)
+        if(questionNumber < questions.length - 1){
             let number = questionNumber + 1;
             setQuestionNumber( number );
             setQuestion(questions[number]);
@@ -238,8 +241,8 @@ function AppHome(){
                 <QuestionMarkup question={question} />
                 
                 <div id="buttonsBox">
-                    <Button id="yes" label="Sim" action={answersYes} />
-                    <Button id="no" label="Não" action={answersNo} />
+                    <Button id="yes" label="Yes" action={answersYes} />
+                    <Button id="no" label="No" action={answersNo} />
                 </div>                
             </div>
             <ProgressBar />

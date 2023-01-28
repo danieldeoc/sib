@@ -43,23 +43,25 @@ function DecisionsList(){
         
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-            
+                       
             const decisionList = document.getElementById("decisionList");
             const productNameResult = doc.data().PurchaseName;
             const scoreResult = doc.data().Score;
 
             var scoreClass = "score";
             var scoreText = results[0];
+
+            console.log(scoreResult + " ")
+
             if(scoreResult > 3){
-                scoreClass = "score";
-                scoreText = results[1];
-            } else if(scoreResult < -3) {
-                scoreClass = "score green"
+                scoreClass = "score green";
                 scoreText = results[2];
-            } else {
+            } else if(scoreResult < -3) {
                 scoreClass = "score pink"
+                scoreText = results[0];
+            } else {
+                scoreClass = "score"
+                scoreText = results[1];
             };
 
             const item = `<li><span class='productName'>${productNameResult}</span><span class='${scoreClass}'>${scoreResult} | ${scoreText}</span></li>`;
@@ -93,20 +95,19 @@ function DecisionsList(){
     
     
     return(
-        <>
-            <Menu />
-            <div id="decisionBox">
-                <h2>Decisions</h2>
-                <ul id="decisionList">
-                    <li id="loadingList">
-                        <div className="loader"></div>
-                        
-
-
-                    </li>    
-                </ul>        
+        <div className="pageBox">
+            <div className="limitor">
+                <Menu />
+                <div id="decisionBox">
+                    <h2>Decisions</h2>
+                    <ul id="decisionList">
+                        <li id="loadingList">
+                            <div className="loader"></div>
+                        </li>    
+                    </ul>        
+                </div>
             </div>
-        </>
+        </div>
     )
 }
 

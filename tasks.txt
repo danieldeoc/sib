@@ -2,9 +2,9 @@
 
 - css space on small phones
 
-- responsive decision list
-- max size modalbox
-
 - decisions type: simple, complete
 
-- trasnlate all to english
+- check the scale metrics
+
+
+- analytics firebase
