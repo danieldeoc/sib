@@ -1,10 +1,10 @@
 
-
-- css space on small phones
-
-- decisions type: simple, complete
-
-- check the scale metrics
+- bg bug, image and background collor, image repeat
 
 
+
+add features
 - analytics firebase
+- decisions type: simple, complete
+- decision history removal
+- firbase get more than 20 results

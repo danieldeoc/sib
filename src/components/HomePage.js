@@ -67,6 +67,12 @@ function AppHome(){
     const [saved, setSaved] = useState(false);
     const positiveAnswers = [0,1,1,1,0,3,0,1,2,2,-1,-1,-1,-1,1,3];
     const negativeAnswers = [-1,-1,-1,-2,-3,0,-2,-1,0,0,0,0,0,1,-1,0];
+
+    const scaleMetric = {
+        min: -16,
+        mid: 0,
+        max: 16
+    }
     
     const purchase = {
         PurchaseName: product,
@@ -80,24 +86,18 @@ function AppHome(){
 
     useEffect(() => {
         document.getElementById("totalQuestions").innerHTML = questions.length;
-
         const wH = window.innerHeight;
         const cH = document.getElementById("root").offsetHeight;
-        console.log(wH + " " + cH)
-        
-
     }, []);
     
 
     // avança nas perguntas
     function AdvanceQuestion(){
-        console.log(questionNumber +" "+ questions.length)
         if(questionNumber < questions.length - 1){
             let number = questionNumber + 1;
             setQuestionNumber( number );
             setQuestion(questions[number]);
-
-            let progressBarWidth = (questionNumber + 2) * 5;
+            let progressBarWidth = ( (questionNumber+2) / questions.length) * 100;
             document.getElementById("progressBar").style.width = progressBarWidth+"%";
             document.getElementById("currentQuestion").innerHTML = number+1;
 
@@ -111,10 +111,10 @@ function AppHome(){
             let width = document.getElementById("scale").offsetWidth; // width of the scale
             let midPoint = width/2; // midpoint
             if(points > 0){   
-                let sideProportion = (points / 22);
+                let sideProportion = (points / scaleMetric.max);
                 var indicatorPosition = (sideProportion * midPoint) + midPoint;
             } else {
-                let sideProportion = (points / 18);
+                let sideProportion = (points / (scaleMetric.min * -1) );
                 let reduce = sideProportion * midPoint;
                 var indicatorPosition = midPoint - (reduce * -1 );
             };
@@ -127,7 +127,7 @@ function AppHome(){
                 resultMessage = 0;
             } else if(points > -4 && points < 5){
                 resultMessage = 1;
-            } else if(points < 18){
+            } else if(points < questions.length){
                 resultMessage = 2;
             } else {
                 alert("Algo saiu errado, muiiiiito errado....")
@@ -249,6 +249,7 @@ function AppHome(){
             <Result 
                 placeholder={product} 
                 scale={scale} 
+                points={points}
                 resultText={result} 
                 newAction={novaDecisao}
                 saveAction={saveProductDb}

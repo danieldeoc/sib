@@ -21,6 +21,8 @@ $gray3:#485056;
 $gray4: #D1D1D1;
 $white: #fff;
 
+$minWidth: 340px;
+
 
 /* //////////////////// */
 /* CONTENT */
@@ -38,7 +40,7 @@ html{
   height: 100%;
   background-size: contain;
   min-height: 490px;
-  min-width: 360px;
+  min-width: $minWidth;
 }
 
 * { font-family: 'Montserrat', sans-serif; }
@@ -168,10 +170,11 @@ html{
   height: $sm;
   background-color: $gray4;
 
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0; right: 0;
   width: 100%;
+  z-index: 10;
   
 }
 .progressContainer .progressBar{
@@ -255,11 +258,11 @@ html{
 /* //////////////////////////// */
 // RESULT PAGE
 #resultBox{
-  padding: 0 $md 0;
+  padding: 0 $md $lg;
   display: none;
   position: absolute;
   top: 50%;
-  height: 375px;
+  min-height: 375px;
   margin-top: -188.5px;
   width: 100%;
   max-width: 690px;
@@ -439,6 +442,11 @@ html{
   padding: $md 0;
   border-bottom: 1px solid $gray2;
   font-weight: bold;
+}
+
+#decisionBox #decisionList li .productName{
+  display: inline-block;
+  max-width: 50%;
 }
 
 #decisionBox #decisionList li .score{ float: right; color: $gray1;}
