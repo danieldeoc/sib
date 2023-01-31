@@ -65,13 +65,13 @@ function AppHome(){
     const [points,setPoints] = useState(0);
     const [product, setProduct] = useState("Product name")
     const [saved, setSaved] = useState(false);
-    const positiveAnswers = [0,1,1,1,0,3,0,1,2,2,-1,-1,-1,-1,1,3];
-    const negativeAnswers = [-1,-1,-1,-2,-3,0,-2,-1,0,0,0,0,0,1,-1,0];
+    const positiveAnswers = [1,1,-1,-1,-2,2,-2,1,2,2,-1,1,-1,-1,1,1];
+    const negativeAnswers = [-1,-1,0,1,0,0,0,0,0,0,0,-1,1,1,0,0];
 
     const scaleMetric = {
-        min: -16,
+        min: -12,
         mid: 0,
-        max: 16
+        max: 15
     }
     
     const purchase = {
@@ -167,6 +167,7 @@ function AppHome(){
 
         const saveBt = document.getElementById("save");
         saveBt.classList.remove("saved");
+        saveBt.classList.remove("saving");
         saveBt.textContent = "Save";
 
         setQuestionNumber(0);
@@ -189,16 +190,20 @@ function AppHome(){
     }
 
     async function firebaseAdd(purchaseProp){
+        const saveBt = document.getElementById("save");
         try {
         const docRef = await addDoc(collection(db, "default"), purchaseProp);
             console.log("Document written with ID: ", docRef.id);
-            const saveBt = document.getElementById("save");
             saveBt.classList.add("saved");
+            saveBt.classList.remove("saving");
             saveBt.textContent = "Saved";
             setSaved(true);
         } catch (e) {
             console.error("Error adding document: ", e);
             setSaved(false);
+            
+            saveBt.classList.remove("saving");
+            saveBt.textContent = "Save";
         }
         savedDataLayoutInteraction();
     }
@@ -207,6 +212,10 @@ function AppHome(){
 
     function saveProductDb(){
         if(!saved){    
+            const saveBt = document.getElementById("save");
+            saveBt.classList.add("saving");
+            saveBt.textContent = "saving...";
+
             firebaseAdd(purchase); 
         /*
             fetch("http://localhost:5000/ListaDeCompras", {

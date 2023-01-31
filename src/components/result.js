@@ -22,6 +22,7 @@ function Result(props){
         <>        
             <div id="resultBox" className="resultQuestion"> 
                 <div className="resultBox">
+                    <span className="scoreLabel">Score:</span>
                     <h1 id="purchaseScale">{props.points}</h1>
                     <h2 id="textResult">{props.resultText}</h2>
                 </div>

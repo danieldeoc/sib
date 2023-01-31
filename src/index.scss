@@ -270,6 +270,13 @@ html{
 
 }
 
+#resultBox .scoreLabel{
+  text-align: center;
+  text-transform: uppercase;
+  color: $gray3;
+  display: block;
+}
+
 .inputContainer {
   padding-bottom: $md;
 }
@@ -345,6 +352,7 @@ html{
 #buttonBox{ padding-top: $md;}
 .overlayBox #save{ background-color: $green;}
 .overlayBox #save.saved{ background-color: $pink;}
+.overlayBox #save.saving{ background-color: $gray2; color: $gray3;}
 
 #buttonBox #newDecision { background-color: $blue;}
 
@@ -440,7 +448,7 @@ html{
 #decisionBox #decisionList li{
   color: $gray3;
   padding: $md 0;
-  border-bottom: 1px solid $gray2;
+  border-bottom: 1px solid $gray4;
   font-weight: bold;
 }
 
