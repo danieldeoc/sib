@@ -14,6 +14,8 @@ import Menu from "./menu";
 //Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore"; 
+import { getAuth, signInAnonymously, onAuthStateChanged  } from "firebase/auth";
+import { getDbId } from "../auth/auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -35,8 +37,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app); 
 
 
+
+
+
 function AppHome(){
-    
+    // QUESTIONS INFRASTRUCTURE
     const questions = [
         "Did I researched the price and product informations?",
     	"Do I have all the money needed to buy it?",
@@ -55,9 +60,7 @@ function AppHome(){
     	"Am I sure that this product will give me what I'm expecting or will it work as expected?",
     	"Is it for some special reason? (gifts, emotional reasons)"
     ];
-
-    
-
+    const [dbId, setDbId] = useState(getDbId());
     const [questionNumber, setQuestionNumber] = useState(0);
     const [question, setQuestion] = useState(questions[questionNumber]);
     const [result, setResult] = useState(0)
@@ -88,9 +91,11 @@ function AppHome(){
         document.getElementById("totalQuestions").innerHTML = questions.length;
         const wH = window.innerHeight;
         const cH = document.getElementById("root").offsetHeight;
+        getDbId();
     }, []);
-    
 
+ 
+    
     // avança nas perguntas
     function AdvanceQuestion(){
         if(questionNumber < questions.length - 1){
@@ -192,7 +197,7 @@ function AppHome(){
     async function firebaseAdd(purchaseProp){
         const saveBt = document.getElementById("save");
         try {
-        const docRef = await addDoc(collection(db, "default"), purchaseProp);
+        const docRef = await addDoc(collection(db, dbId), purchaseProp);
             console.log("Document written with ID: ", docRef.id);
             saveBt.classList.add("saved");
             saveBt.classList.remove("saving");
@@ -263,7 +268,9 @@ function AppHome(){
                 newAction={novaDecisao}
                 saveAction={saveProductDb}
                 nameSetter={setProductName}
-                 />            
+                 />   
+
+            
         </>
     )
 }

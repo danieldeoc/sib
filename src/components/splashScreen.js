@@ -1,13 +1,18 @@
 import React from "react";
 import ShoppingCar from "../images/chart.png";
 
+import { getDbId } from "../auth/auth.js";
+
 function SplashScreen(){
     function splashScreenHideOut(){
+        getDbId();
         setTimeout(() => {
             window.location.href = "/decision";           
         }, 4000)
     }
     splashScreenHideOut();
+
+
     return(
         <div className="splashScreenBox">
 

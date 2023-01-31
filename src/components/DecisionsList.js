@@ -5,6 +5,7 @@ import Menu from "./menu";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getDbId } from "../auth/auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -30,6 +31,7 @@ const db = getFirestore(app);
 
 function DecisionsList(){
     const [decisionItens, setDecisionItens] = useState([]);
+    const [dbName, setDbName] = useState(getDbId)
 
     const results = [
         "Not recomended",
@@ -37,9 +39,11 @@ function DecisionsList(){
         "Recomended"
     ]
 
-    async function firebaseData(){
+    
 
-        const q = query(collection(db, "default"));
+    async function firebaseData(){
+        console.log(dbName)
+        const q = query(collection(db, dbName));
         
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -90,9 +94,9 @@ function DecisionsList(){
     useEffect(() => {
         // purchasedItens();
         firebaseData();
+        
     }, []);
-
-    
+  
     
     return(
         <div className="pageBox">
