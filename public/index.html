@@ -34,7 +34,7 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#FF595E">
   </head>
-  <body>
+  <body id="body">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
@@ -48,4 +48,13 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+
+  <script type="text/javascript">
+    const body = document.getElementById("body");
+    const winH = window.innerHeight;
+
+    console.log(winH)
+    body.style.minHeight = winH+"px"
+
+  </script>
 </html>
