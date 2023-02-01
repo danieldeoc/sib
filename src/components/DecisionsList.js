@@ -53,9 +53,6 @@ function DecisionsList(){
         if(querySnapshot.empty){
             setDecisionList(<li>No results</li>);
         } else {
-
-
-
             querySnapshot.forEach((doc) => {
                 const decisionList = document.getElementById("decisionList");
                 const productNameResult = doc.data().PurchaseName;
@@ -85,12 +82,7 @@ function DecisionsList(){
     
     
     useEffect(() => {
-        firebaseData();
-
-    
-          
-        
-    
+        firebaseData();    
     }, []);
 
 

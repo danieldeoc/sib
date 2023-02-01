@@ -16,6 +16,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore"; 
 import { getAuth, signInAnonymously, onAuthStateChanged  } from "firebase/auth";
 import { getDbId } from "../auth/auth.js";
+import Switcher, {modeSimple, modeComplete} from "./Switcher";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -36,13 +37,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app); 
 
-
-
-
-
 function AppHome(){
     // QUESTIONS INFRASTRUCTURE
-    const questions = [
+    // complete
+    const completeQuestions = [
         "Did I researched the price and product informations?",
     	"Do I have all the money needed to buy it?",
     	"If I spend this money, will I regret?",
@@ -60,6 +58,16 @@ function AppHome(){
     	"Am I sure that this product will give me what I'm expecting or will it work as expected?",
     	"Is it for some special reason? (gifts, emotional reasons)"
     ];
+    const simpleQuestions = [
+        "Do I have all the money needed to buy it?",
+        "Do I have all the money needed to buy it?",
+        "If I spend this money, will I regret?",
+        "Will I use saved money to buy this?",
+        "Buying this product will make me spend more money in the future?"
+    ]
+
+    const [questions, setQuestions] = useState(simpleQuestions);
+    
     const [dbId, setDbId] = useState("");
     const [questionNumber, setQuestionNumber] = useState(0);
     const [question, setQuestion] = useState(questions[questionNumber]);
@@ -68,15 +76,54 @@ function AppHome(){
     const [points,setPoints] = useState(0);
     const [product, setProduct] = useState("Product name")
     const [saved, setSaved] = useState(false);
-    const positiveAnswers = [1,1,-1,-1,-2,2,-2,1,2,2,-1,1,-1,-1,1,1];
-    const negativeAnswers = [-1,-1,0,1,0,0,0,0,0,0,0,-1,1,1,0,0];
+
+
+    const completePositiveAnswers = [1,1,-1,-1,-2,2,-2,1,2,2,-1,1,-1,-1,1,1];
+    const completeNegativeAnswers = [-1,-1,0,1,0,0,0,0,0,0,0,-1,1,1,0,0];
+    const simplePositiveAnswers = [1,1,-1,-1,-2];
+    const simpleNegativeAnswers = [-1,-1,0,1,0];
+    
+    const [positiveAnswers, setPositiveAnswers] = useState(simplePositiveAnswers);
+    const [negativeAnswers, setnegativeAnswers] = useState(simpleNegativeAnswers);
 
     const scaleMetric = {
-        min: -12,
+        min: -6,
         mid: 0,
-        max: 15
+        max: 3
     }
+
+    const setSimple = () => {
+        
+            console.log("simple")
+            setQuestions(simpleQuestions);
+            modeSimple();            
+            scaleMetric.min = -6;
+            scaleMetric.max = 3;
+            setPositiveAnswers(simplePositiveAnswers)
+            setnegativeAnswers(simpleNegativeAnswers)
+            
+        
+        
+            setQuestion(questions[0]);
+            document.getElementById("totalQuestions").innerHTML = questions.length;
+            
+        
+    };
     
+    const setComplete = () => {
+        console.log("complete")
+        setQuestions(completeQuestions);
+        modeComplete();            
+        scaleMetric.min = -12;
+        scaleMetric.max = 15;
+        setnegativeAnswers(completeNegativeAnswers)
+        setPositiveAnswers(completePositiveAnswers)
+        document.getElementById("totalQuestions").innerHTML = questions.length;
+        console.log(questions)
+        setQuestion(questions[0]);
+            
+    }
+
     const purchase = {
         PurchaseName: product,
         Score: scale
@@ -218,24 +265,7 @@ function AppHome(){
             const saveBt = document.getElementById("save");
             saveBt.classList.add("saving");
             saveBt.textContent = "saving...";
-
             firebaseAdd(purchase); 
-        /*
-            fetch("http://localhost:5000/ListaDeCompras", {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(purchase),
-            }).then( (resp) => resp.json() )
-            .then( function(response) {
-                const saveBt = document.getElementById("save");
-                saveBt.classList.add("saved");
-                saveBt.textContent = "Saved";
-                setSaved(true);
-    
-            }).catch( (err) => console.log(err) );
-            */
         }
     }
 
@@ -250,8 +280,8 @@ function AppHome(){
         <>
             <Menu />
             <div id="questionContentBox">
+                <Switcher actionSimple={setSimple} actionComplete={setComplete} />
                 <QuestionMarkup question={question} />
-                
                 <div id="buttonsBox">
                     <Button id="yes" label="Yes" action={answersYes} />
                     <Button id="no" label="No" action={answersNo} />

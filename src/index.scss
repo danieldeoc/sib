@@ -141,13 +141,21 @@ html{
 
 #questionContentBox{
   position: absolute;
-  height: 340px;
+  height: 575px;
   top: 50%;
-  margin-top: -160px; 
+  margin-top: -288px; 
   width: 100%;
   display: block;
   max-width: 690px;
 }
+@media only screen and (max-height: 680px) {
+  #questionContentBox{
+    position: relative;
+    top: 0;
+    margin-top: 0;
+  }
+}
+
 #questionBox{
   padding: 0 $md;
 }
@@ -159,9 +167,9 @@ html{
   font-weight: bold;
   color: $gray3;
   margin: 0 0 $md;
-  line-height: 2rem;
+  line-height: 2.6rem;
   height: 13rem;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
 }
 
 /* //////////////////// */
@@ -192,7 +200,7 @@ html{
 
 .button{ 
   display: block;
-  padding: $md $lg;
+  padding: $xl $lg;
   text-align: center;
   cursor: pointer;
   border-radius: $sm;
@@ -354,12 +362,12 @@ html{
   top: 50%; left: 5%; right: 5%;
   width: 90%;
   max-width: 500px;
-  margin: -93px auto 0;
+  margin: -110px auto 0;
   background: $white;
   padding: $md;
   box-sizing: border-box;
   box-shadow: $shadow;
-  height: 186px;
+  height: 220px;
   z-index: 1001;
 }
 
@@ -501,3 +509,65 @@ html{
   75% { bottom: $lg;}
   100% {bottom: -30%; display: none;}
 }
+
+
+
+//////////////////////////
+/// Switcher
+/// 
+.switcherBox{
+  display: block;
+  margin: 0 0 $lg;
+  padding: $md;
+}
+.switcherBox .switcherTitle{ 
+  text-transform: uppercase;
+  color: $gray3;
+  font-weight: bold;
+  padding-bottom: $lg;
+  font-size: 1.4rem;
+  display: block;
+}
+.switcherBox .switcherSpace{ 
+  position: relative;
+  padding: $md;
+  background: $gray4;
+  border-radius: $md;
+  height: 80px;
+}
+
+.switcherBox .switcherSpace .switcherButtonSpace .switcherButton{
+  display: block;
+  width: 50%;
+  margin-left: 0;
+  border-radius: $md;
+  position: absolute;
+  background-color: $blue;
+  left: $sm; top: $sm; bottom: $sm;
+  z-index: 10;
+  transition: all 300ms ease-out;
+}
+.switcherBox .switcherSpace .switcherButtonSpace.complete .switcherButton{
+  left: calc(50% - $sm);
+  transition: all 300ms ease-out;
+}
+
+.switcherBox .switcherSpace .switcherLabels > div{
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 50%;
+  z-index: 20;
+  color: $gray3;
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  text-align: center;
+  box-sizing: border-box;
+  padding-top: 40px;
+  cursor:pointer;
+  transition: all 300ms ease-out;
+}
+
+.switcherBox .switcherSpace .switcherLabels > div.active{ color: $white;}
+.switcherBox .switcherSpace .switcherLabels > div.switcherSimple{ left: 0;}
+.switcherBox .switcherSpace .switcherLabels > div.switcherComplete{ left: 50%;}
