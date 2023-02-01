@@ -21,7 +21,7 @@ $gray3:#485056;
 $gray4: #D1D1D1;
 $white: #fff;
 
-$minWidth: 340px;
+$minWidth: 320px;
 
 
 /* //////////////////// */
@@ -180,23 +180,8 @@ html{
 .progressContainer .progressBar{
   width: 0px;
   height: 100%;
-  background: linear-gradient(90deg, #6A4C93 0%, #FFCA3A 96.45%);
-  animation: bgAnimation 1s ease infinite alternate-reverse;
+  background: #6A4C93
 }
-
-
-@keyframes bgAnimation {
-  0%   {background: linear-gradient(90deg, #6A4C93 0%, #FFCA3A 100%);}
-  12%  {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 12%, #FFCA3A 100%);}
-  25%  {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 25%, #FFCA3A 100%);}
-  37%  {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 37%, #FFCA3A 100%);}
-  50% {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 50%, #FFCA3A 100%);}
-  62%   {background: linear-gradient(90deg,#FFCA3A 0%,  #6A4C93 62%, #FFCA3A 100%);}
-  75%   {background: linear-gradient(90deg,#FFCA3A 0%,  #6A4C93 75%, #FFCA3A 100%);}
-  87%   {background: linear-gradient(90deg,#FFCA3A 0%,  #6A4C93 87%, #FFCA3A 100%);}
-  100% {background: linear-gradient(90deg, #FFCA3A 0%, #6A4C93 100%);}
-}
-
 
 /* //////////////////// */
 /* BUTTONS */
@@ -480,4 +465,39 @@ html{
   0%{transform: rotate(0deg);}
   50%{transform: rotate(180deg);}
   100%{transform: rotate(360deg);}
+}
+
+
+//////////////////////////
+/// Response Message
+/// 
+.responseMessage{
+  position: fixed;
+  width: 50%;
+  margin: 0 auto;
+  bottom: -30%;
+  box-sizing: border-box;
+  background-color: $green;
+  border-radius: $md;
+  padding: $lg;
+  color: $white;
+  font-size: 1.2rem;
+  left: 50%;
+  margin-left: -25%;
+}
+
+.responseMessage.show{
+  animation: messageApperance 6s ease-in-out;
+}
+
+.responseMessage span{}
+.responseMessage div{
+  float: right;
+}
+
+@keyframes messageApperance {
+  0%{ bottom: -30%; display: block;}
+  25% { bottom: $lg;}
+  75% { bottom: $lg;}
+  100% {bottom: -30%; display: none;}
 }

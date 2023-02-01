@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Menu from "./menu";
+import ResponseMessage, {showMessage} from "./responseMessage";
 
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs,  doc, deleteDoc } from "firebase/firestore";
 import { getDbId } from "../auth/auth.js";
+import DecisionHistoryItem from "./DecisionHistoryItem";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,92 +28,99 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-
-
+// "<li id="loadingList"><div className='loader'></div></li>"
 function DecisionsList(){
-    const [decisionItens, setDecisionItens] = useState([]);
+    const loader = (<li id="loadingList"><div className='loader'></div></li>);
+    const decisionItens = [];
+    const [decisionList, setDecisionList] = useState(loader)
     const [dbName, setDbName] = useState(getDbId)
+    const [alertMessage, setAlertMessage] = useState("none");
+    var list = false;
 
     const results = [
         "Not recomended",
         "Neutral",
         "Recomended"
-    ]
-
-    
+    ]   
 
     async function firebaseData(){
-        console.log(dbName)
-        const q = query(collection(db, dbName));
-        
+        setDecisionList(loader);
+        const q = query(collection(db, dbName));        
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-                       
-            const decisionList = document.getElementById("decisionList");
-            const productNameResult = doc.data().PurchaseName;
-            const scoreResult = doc.data().Score;
 
-            var scoreClass = "score";
-            var scoreText = results[0];
+        console.log(querySnapshot.empty)
 
-            console.log(scoreResult + " ")
+        if(querySnapshot.empty){
+            setDecisionList(<li>No results</li>);
+        } else {
 
-            if(scoreResult > 3){
-                scoreClass = "score green";
-                scoreText = results[2];
-            } else if(scoreResult < -3) {
-                scoreClass = "score pink"
-                scoreText = results[0];
-            } else {
-                scoreClass = "score"
-                scoreText = results[1];
-            };
 
-            const item = `<li><span class='productName'>${productNameResult}</span><span class='${scoreClass}'>${scoreResult} | ${scoreText}</span></li>`;
 
-            decisionList.innerHTML += item;
+            querySnapshot.forEach((doc) => {
+                const decisionList = document.getElementById("decisionList");
+                const productNameResult = doc.data().PurchaseName;
+                const scoreResult = doc.data().Score;
+                var scoreClass = "score";
+                var scoreText = results[0];
+                if(scoreResult > 3){
+                    scoreClass = "score green";
+                    scoreText = results[2];
+                } else if(scoreResult < -3) {
+                    scoreClass = "score pink"
+                    scoreText = results[0];
+                } else {
+                    scoreClass = "score"
+                    scoreText = results[1];
+                };          
+                const item = (<DecisionHistoryItem key={doc.id} productNameResult={productNameResult} scoreClass={scoreClass} scoreResult={scoreResult} scoreText={scoreText} id={doc.id} action={() => { remove(doc.id) }} />);
+                decisionItens.push(item);
+                setDecisionList(decisionItens)       
+                      
+            });
             
-        });
-        document.getElementById("loadingList").style.display = "none";
-    }
-
-    
-    
-
-    // function purchasedItens(){
-    //     fetch("http://localhost:5000/ListaDeCompras", {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-type': 'application/json'
-    //         }
-    //     }).then( (resp) => resp.json() )
-    //     .then( function(response) {
-    //         setDecisionItens(response);
-    //     }).catch( (err) => console.log(err) )
-    // }
-
-    useEffect(() => {
-        // purchasedItens();
-        firebaseData();
+            
+        }
         
-    }, []);
-  
+    }
     
+    
+    useEffect(() => {
+        firebaseData();
+
+    
+          
+        
+    
+    }, []);
+
+
+    async function remove(document){
+        await deleteDoc(doc(db, dbName, document)).then( () => {
+            setAlertMessage("Decision successfully deleted!");
+            showMessage();
+            firebaseData();
+            return true;
+        }).catch((error) => {
+            console.error("Error removing decision: ", error);
+            return false;
+        });              
+    }
+      
     return(
+        <>
         <div className="pageBox">
             <div className="limitor">
                 <Menu />
                 <div id="decisionBox">
                     <h2>Decisions</h2>
                     <ul id="decisionList">
-                        <li id="loadingList">
-                            <div className="loader"></div>
-                        </li>    
+                        {decisionList}
                     </ul>        
                 </div>
             </div>
         </div>
+        <ResponseMessage message={alertMessage} />
+        </>
     )
 }
 

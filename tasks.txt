@@ -1,10 +1,2 @@
-- saving button status
-- 320 min width
-- decision history removal
-- flat progress bar
-
-
-
 add features
-- analytics firebase
 - decisions type: simple, complete

@@ -60,7 +60,7 @@ function AppHome(){
     	"Am I sure that this product will give me what I'm expecting or will it work as expected?",
     	"Is it for some special reason? (gifts, emotional reasons)"
     ];
-    const [dbId, setDbId] = useState(getDbId());
+    const [dbId, setDbId] = useState("");
     const [questionNumber, setQuestionNumber] = useState(0);
     const [question, setQuestion] = useState(questions[questionNumber]);
     const [result, setResult] = useState(0)
@@ -89,9 +89,7 @@ function AppHome(){
 
     useEffect(() => {
         document.getElementById("totalQuestions").innerHTML = questions.length;
-        const wH = window.innerHeight;
-        const cH = document.getElementById("root").offsetHeight;
-        getDbId();
+        setDbId(getDbId());
     }, []);
 
  

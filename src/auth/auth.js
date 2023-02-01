@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore"; 
 import { getAuth, signInAnonymously, onAuthStateChanged  } from "firebase/auth";
+import { getAnalytics } from "firebase/analytics";
+
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,6 +23,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const db = getFirestore(app); 
 
 const dbName = undefined;
@@ -57,7 +60,7 @@ function authUser(){
 function defineDataBase(id){
     //console.log("id: "+id+" / stid: "+dbId)
     //setDbId(id)
-    document.cookie = "db="+id+"_purchaseList"; 
+    document.cookie = "db="+id+"_purchaseList; ; expires=Thu, 1 Jan 2060 12:00:00 UTC"; 
     console.log("5. cookie created")
     const dbName = id+"_purchaseList";
     console.log("6. database name exported as "+ dbName)
@@ -79,4 +82,5 @@ export function getDbId(){
         console.log("2. no database, set new one")
         authUser();
     }
+    
 }   
