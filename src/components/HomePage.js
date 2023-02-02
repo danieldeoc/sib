@@ -243,6 +243,8 @@ function AppHome(){
         setPoints(0);
         setProduct(" ");
         setSaved(false);
+        setTotalNumber(questions.length)
+        
     }
 
     function savedDataLayoutInteraction(){
