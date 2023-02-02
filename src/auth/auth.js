@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+
 //Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore"; 
+import { getFirestore } from "firebase/firestore"; 
 import { getAuth, signInAnonymously, onAuthStateChanged  } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -21,19 +21,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app); 
-const dbName = undefined;
-
 
 function authUser(){
     const auth = getAuth();
     signInAnonymously(auth)
     .then(() => {
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+        .catch((error) => {            
+            console.log(error.message)
         });
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -56,7 +51,6 @@ function defineDataBase(id){
 }
 
 export function getDbId(){
-    let cookies = document.cookie; 
     const dbName = document.cookie
         .split('; ')
         .find((row) => row.startsWith('db='))

@@ -1,4 +1,3 @@
-
 /* //////////////////// */
 /* SPACING */
 $xs: 4px;
@@ -44,6 +43,8 @@ html{
 }
 
 * { font-family: 'Montserrat', sans-serif; }
+
+a{ text-decoration: none;}
 
 /* //////////////////// */
 /* STRUCTURE */
@@ -453,6 +454,21 @@ html{
 #decisionBox #decisionList li .score{ float: right; color: $gray1;}
 #decisionBox #decisionList li .score.green{ color: $green;}
 #decisionBox #decisionList li .score.pink{ color: $pink;}
+
+#decisionBox #decisionList li .removal{ 
+  display: inline-block;
+  padding: $xs;
+  border: 1px solid $pink;
+  color: $pink;
+  text-align: center;
+  width: $md;
+  height: $md;
+  border-radius: 100%;
+  font-size: 12px;
+  margin-left: $md;
+  margin-top: -8px;
+
+}
 
 #loadingList{
   padding: $xxl;

@@ -14,7 +14,7 @@ import Menu from "./menu";
 //Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore"; 
-import { getAuth, signInAnonymously, onAuthStateChanged  } from "firebase/auth";
+
 import { getDbId } from "../auth/auth.js";
 import Switcher, {modeSimple, modeComplete} from "./Switcher";
 
@@ -42,7 +42,7 @@ function AppHome(){
     // complete
     const completeQuestions = [
         "Did I researched the price and product informations?",
-    	"Do I have all the money needed to buy it?",
+    	"Do I have all the money needed to buy this?",
     	"If I spend this money, will I regret?",
     	"Will I use saved money to buy this?",
     	"Buying this product will make me spend more money in the future?",
@@ -58,70 +58,86 @@ function AppHome(){
     	"Am I sure that this product will give me what I'm expecting or will it work as expected?",
     	"Is it for some special reason? (gifts, emotional reasons)"
     ];
+    const completePositiveAnswers = [1,1,-1,-1,-2,2,-2,1,2,2,-1,1,-1,-1,1,1];
+    const completeNegativeAnswers = [-1,-1,0,1,0,0,0,0,0,0,0,-1,1,1,0,0];
+    const completeScaleMetric ={
+        min: -12,
+        mid: 0,
+        max: 15
+    };
+
     const simpleQuestions = [
-        "Do I have all the money needed to buy it?",
-        "Do I have all the money needed to buy it?",
-        "If I spend this money, will I regret?",
         "Will I use saved money to buy this?",
-        "Buying this product will make me spend more money in the future?"
-    ]
+        "If I spend this money now, will I miss it in future?",
+        "Do I need to buy this right now?",
+        "Can this product be harmful to me or others? (health problems, accidents, etc.)",
+        "Can I replace this product with something else without spending anything or spending less?"
+    ];
+    const simplePositiveAnswers = [-2,-2,0,-2,-2];
+    const simpleNegativeAnswers = [1,1,-2,0,2];
+    const simpleScaleMetric = {
+        min: -10,
+        mid: 0,
+        max: 4};
 
     const [questions, setQuestions] = useState(simpleQuestions);
     
     const [dbId, setDbId] = useState("");
     const [questionNumber, setQuestionNumber] = useState(0);
-    const [question, setQuestion] = useState(questions[questionNumber]);
-    const [result, setResult] = useState(0)
-    const [scale, setScale] = useState(0)
+    const [result, setResult] = useState(0);
+    const [scale, setScale] = useState(0);
     const [points,setPoints] = useState(0);
-    const [product, setProduct] = useState("Product name")
+    const [product, setProduct] = useState("Product name");
     const [saved, setSaved] = useState(false);
+    const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
+    const [decisionType, setDecisionType] = useState("simple");
+    const [totalQuestionsNumber, setTotalNumber] = useState(questions.length);
 
-
-    const completePositiveAnswers = [1,1,-1,-1,-2,2,-2,1,2,2,-1,1,-1,-1,1,1];
-    const completeNegativeAnswers = [-1,-1,0,1,0,0,0,0,0,0,0,-1,1,1,0,0];
-    const simplePositiveAnswers = [1,1,-1,-1,-2];
-    const simpleNegativeAnswers = [-1,-1,0,1,0];
     
     const [positiveAnswers, setPositiveAnswers] = useState(simplePositiveAnswers);
-    const [negativeAnswers, setnegativeAnswers] = useState(simpleNegativeAnswers);
+    const [negativeAnswers, setNegativeAnswers] = useState(simpleNegativeAnswers);
+    
+    
+    
+
 
     const scaleMetric = {
-        min: -6,
+        min: simpleScaleMetric.min,
         mid: 0,
-        max: 3
+        max: simpleScaleMetric.max
     }
 
-    const setSimple = () => {
-        
-            console.log("simple")
+
+    function setSimple() {
+        if(decisionType === "complete"){
+
+            console.log("run simple change")
             setQuestions(simpleQuestions);
+            setTotalNumber(simpleQuestions.length);
+            scaleMetric.min = simpleScaleMetric.min;
+            scaleMetric.max = simpleScaleMetric.max;
+            setCurrentQuestion(simpleQuestions[0]);
             modeSimple();            
-            scaleMetric.min = -6;
-            scaleMetric.max = 3;
-            setPositiveAnswers(simplePositiveAnswers)
-            setnegativeAnswers(simpleNegativeAnswers)
-            
-        
-        
-            setQuestion(questions[0]);
-            document.getElementById("totalQuestions").innerHTML = questions.length;
-            
-        
+            setNegativeAnswers(simpleNegativeAnswers);
+            setPositiveAnswers(simplePositiveAnswers);
+            setDecisionType("simple");
+        } 
     };
+
     
-    const setComplete = () => {
-        console.log("complete")
-        setQuestions(completeQuestions);
-        modeComplete();            
-        scaleMetric.min = -12;
-        scaleMetric.max = 15;
-        setnegativeAnswers(completeNegativeAnswers)
-        setPositiveAnswers(completePositiveAnswers)
-        document.getElementById("totalQuestions").innerHTML = questions.length;
-        console.log(questions)
-        setQuestion(questions[0]);
-            
+    function setComplete() {
+        if(decisionType === "simple"){
+            console.log("run complete change")
+            setQuestions(completeQuestions);
+            setTotalNumber(completeQuestions.length);
+            scaleMetric.min = completeScaleMetric.min;
+            scaleMetric.max = completeScaleMetric.max;
+            setCurrentQuestion(completeQuestions[0]);
+            modeComplete();            
+            setNegativeAnswers(completeNegativeAnswers);
+            setPositiveAnswers(completePositiveAnswers);
+            setDecisionType("complete");
+        }            
     }
 
     const purchase = {
@@ -146,7 +162,7 @@ function AppHome(){
         if(questionNumber < questions.length - 1){
             let number = questionNumber + 1;
             setQuestionNumber( number );
-            setQuestion(questions[number]);
+            setCurrentQuestion(questions[number])
             let progressBarWidth = ( (questionNumber+2) / questions.length) * 100;
             document.getElementById("progressBar").style.width = progressBarWidth+"%";
             document.getElementById("currentQuestion").innerHTML = number+1;
@@ -221,7 +237,7 @@ function AppHome(){
         saveBt.textContent = "Save";
 
         setQuestionNumber(0);
-        setQuestion(questions[0]);
+        setCurrentQuestion(questions[0]);
         setResult(0);
         setScale(0);
         setPoints(0);
@@ -281,7 +297,7 @@ function AppHome(){
             <Menu />
             <div id="questionContentBox">
                 <Switcher actionSimple={setSimple} actionComplete={setComplete} />
-                <QuestionMarkup question={question} />
+                <QuestionMarkup question={currentQuestion} totalQuestions={totalQuestionsNumber} />
                 <div id="buttonsBox">
                     <Button id="yes" label="Yes" action={answersYes} />
                     <Button id="no" label="No" action={answersNo} />

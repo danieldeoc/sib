@@ -5,7 +5,7 @@ import ResponseMessage, {showMessage} from "./responseMessage";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, where, getDocs,  doc, deleteDoc } from "firebase/firestore";
+import { getFirestore, collection, query, getDocs,  doc, deleteDoc } from "firebase/firestore";
 import { getDbId } from "../auth/auth.js";
 import DecisionHistoryItem from "./DecisionHistoryItem";
 
@@ -30,12 +30,14 @@ const db = getFirestore(app);
 
 // "<li id="loadingList"><div className='loader'></div></li>"
 function DecisionsList(){
+
+    const dbName = getDbId();
     const loader = (<li id="loadingList"><div className='loader'></div></li>);
     const decisionItens = [];
     const [decisionList, setDecisionList] = useState(loader)
-    const [dbName, setDbName] = useState(getDbId)
+    
     const [alertMessage, setAlertMessage] = useState("none");
-    var list = false;
+    
 
     const results = [
         "Not recomended",
@@ -54,7 +56,7 @@ function DecisionsList(){
             setDecisionList(<li>No results</li>);
         } else {
             querySnapshot.forEach((doc) => {
-                const decisionList = document.getElementById("decisionList");
+                
                 const productNameResult = doc.data().PurchaseName;
                 const scoreResult = doc.data().Score;
                 var scoreClass = "score";

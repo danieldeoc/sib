@@ -2,7 +2,6 @@ import React from "react";
 import Button from "./button";
 import InputText from "./input";
 import Arrow from '../images/arrow.png';
-import { useEffect } from "react";
 
 function Result(props){
     const saveOverlay = document.getElementById("saveOverlay");
@@ -28,7 +27,7 @@ function Result(props){
                 </div>
                 <div id="scale" className="scale">
                     <div id="scaleIndicator" className="scaleIndicator">
-                        <img src={Arrow} />
+                        <img src={Arrow} alt="Arrow scale indicator" />
                     </div>
                 </div>
                 <div className="scaleLegend">

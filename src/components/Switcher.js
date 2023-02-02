@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 
 export function modeSimple(){
     document.getElementById("switcherButtonSpace").classList.remove("complete");
