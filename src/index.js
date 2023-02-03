@@ -5,14 +5,16 @@ import './index.scss';
 import AppHome from './components/HomePage.js';
 import DecisionsList from './components/DecisionsList';
 import SplashScreen from './components/splashScreen';
+import PrivacyPolice from './components/privacyPolice';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Routes>
           <Route exact path='/' element={<SplashScreen />} />
-          <Route exact path='/decision' element={<AppHome />} />
-          <Route exact path='/decisionsList' element={<DecisionsList />} />
+          <Route path='/decision' element={<AppHome />} />
+          <Route path='/decisionsList' element={<DecisionsList />} />
+          <Route path='/termsandconditions' element={<PrivacyPolice />} />
     </Routes>
   </BrowserRouter>  
 );

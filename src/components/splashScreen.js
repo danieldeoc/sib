@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ShoppingCar from "../images/chart.png";
-
 import { getDbId } from "../auth/auth.js";
 
 function SplashScreen(){
-    function splashScreenHideOut(){
-        getDbId();
+    async function destinationHandler(){
+        let destination = "/decision";
+        const dbDataName = getDbId();
+        console.log(dbDataName)
+
+        const terms = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('terms='))
+            ?.split('=')[1];
+
+        if(!terms){
+            console.log("Need privacy acknowledge")
+            destination = "/termsandconditions";
+        } 
         setTimeout(() => {
-            window.location.href = "/decision";           
+            window.location.href = destination;           
         }, 4000)
+
     }
-    splashScreenHideOut();
-
-
+    useEffect(()=>{
+        destinationHandler();
+    }, [])
+    
     return(
         <div className="splashScreenBox">
 

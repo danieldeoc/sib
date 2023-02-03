@@ -45,8 +45,10 @@ function authUser(){
 }
 // user authentication
 function defineDataBase(id){
-    document.cookie = "db="+id+"_purchaseList; ; expires=Thu, 1 Jan 2060 12:00:00 UTC"; 
     const dbName = id+"_purchaseList";
+    document.cookie = "db="+dbName+""; 
+    document.cookie = "expires=Thu, 1 Jan 2060 12:00:00 UTC"; 
+    console.log(document.cookie)
     return dbName;
 }
 

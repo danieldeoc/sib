@@ -255,13 +255,20 @@ a{ text-decoration: none;}
   padding: 0 $md $lg;
   display: none;
   position: absolute;
-  top: 50%;
+  top: 20%;
   min-height: 375px;
-  margin-top: -188.5px;
   width: 100%;
   max-width: 690px;
   box-sizing: border-box;
 
+}
+@media only screen and (max-height: 730px) {
+  #resultBox{
+    position: relative;
+    top: 0;
+    margin-top: 0;
+    padding-top: $lg;
+  }
 }
 
 #resultBox .scoreLabel{
@@ -363,12 +370,12 @@ a{ text-decoration: none;}
   top: 50%; left: 5%; right: 5%;
   width: 90%;
   max-width: 500px;
-  margin: -110px auto 0;
+  margin: -97px auto 0;
   background: $white;
   padding: $md;
   box-sizing: border-box;
   box-shadow: $shadow;
-  height: 220px;
+  height: 195px;
   z-index: 1001;
 }
 
@@ -458,13 +465,12 @@ a{ text-decoration: none;}
 #decisionBox #decisionList li .removal{ 
   display: inline-block;
   padding: $xs;
-  border: 1px solid $pink;
   color: $pink;
   text-align: center;
   width: $md;
   height: $md;
-  border-radius: 100%;
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: bolder;
   margin-left: $md;
 }
 
@@ -538,7 +544,7 @@ a{ text-decoration: none;}
   text-transform: uppercase;
   color: $gray3;
   font-weight: bold;
-  padding-bottom: $md;
+  padding: $lg 0 $md;
   font-size: 0.9rem;
   display: block;
 }
@@ -552,7 +558,7 @@ a{ text-decoration: none;}
 
 .switcherBox .switcherSpace .switcherButtonSpace .switcherButton{
   display: block;
-  width: 50%;
+  width: calc(50% - $sm);
   margin-left: 0;
   border-radius: $md;
   position: absolute;
@@ -562,7 +568,7 @@ a{ text-decoration: none;}
   transition: all 300ms ease-out;
 }
 .switcherBox .switcherSpace .switcherButtonSpace.complete .switcherButton{
-  left: calc(50% - $sm);
+  left: 50%;
   transition: all 300ms ease-out;
 }
 
@@ -585,3 +591,21 @@ a{ text-decoration: none;}
 .switcherBox .switcherSpace .switcherLabels > div.active{ color: $white;}
 .switcherBox .switcherSpace .switcherLabels > div.switcherSimple{ left: 0;}
 .switcherBox .switcherSpace .switcherLabels > div.switcherComplete{ left: 50%;}
+
+
+.privacyPolicePage{
+  background-color: $pink;
+  position: absolute;
+  left: 0; top: 0;
+  right: 0; bottom: 0;
+  padding: $md;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.privacyPolicePage h1,
+.privacyPolicePage h2,
+.privacyPolicePage li,
+.privacyPolicePage p{ color: $white;}
+
+.buttonAcceptance .button{ background-color: $yellow; color: $gray3;}
